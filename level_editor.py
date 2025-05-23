@@ -88,6 +88,15 @@ class MYADDON_OT_export_scene(bpy.types.Operator, bpy_extras.io_utils.ExportHelp
         #カスタムプロパティ'file_name'
         if "file_name" in object:
               self.write_and_print(file,indent + "N %s" % object["file_name"])
+        #カスタムプロパティ'collider'
+        if "collider" in object:
+              self.write_and_print(file,indent + "C %s" % object["collider"])
+              temp_str = indent + "CC %f %f %f " 
+              temp_str %= (object["collider_center"][0],object["collider_center"][1],object["collider_center"][2])
+              self.write_and_print(file,temp_str)
+              temp_str = indent + "CS %f %f %f " 
+              temp_str %= (object["collider_size"][0],object["collider_size"][1],object["collider_size"][2])
+              self.write_and_print(file,temp_str)
         self.write_and_print(file,indent + 'END')
         self.write_and_print(file, '') 
          
@@ -241,7 +250,6 @@ class DrawCollider:
     #描画ハンドル
     handle = None
     
-    @staticmethod
     #3Dビューに登録する描画関数
     def draw_collider():
 
@@ -266,18 +274,35 @@ class DrawCollider:
         
         #現在シーンのオブジェクトリストを走査
         for object in bpy.context.scene.objects:
+            
+            #コライダープロパティが無ければ、描画をスキップ 
+            if not "collider" in object:
+                continue
+            #中心点、サイズの変数を宣言
+            center = mathutils.Vector((0,0,0,))
+            size = mathutils.Vector((2,2,2,))
+            
+            #プロパティから値を取得
+            center[0] = object["collider_center"][0]
+            center[1] = object["collider_center"][1]
+            center[2] = object["collider_center"][2]
+            size[0] = object["collider_size"][0]
+            size[1] = object["collider_size"][1]
+            size[2] = object["collider_size"][2]
+
             #追加前の頂点数
             start = len(vertices["pos"])
            
             #Boxの8頂点分回す
             for offset in offsets:
                 #オブジェクトの中心座標をコピー
-
-                pos = copy.copy(object.location)
+                pos = copy.copy(center)
                 #中心点を基準に各頂点ごとにずらす
                 pos[0] += offset[0] * size[0]
                 pos[1] += offset[1] * size[1]
                 pos[2] += offset[2] * size[2]
+                #ローカル座標からワールド座標に変換
+                pos = object.matrix_world @ pos
                 #頂点データリストに座標を追加
                 vertices['pos'].append(pos)
 
