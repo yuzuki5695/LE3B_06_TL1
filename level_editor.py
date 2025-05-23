@@ -3,6 +3,7 @@ import math
 import bpy_extras
 import gpu
 import gpu_extras.batch
+import copy
 
 # ブレンダーに登録するアドオン情報
 bl_info = {
@@ -24,28 +25,25 @@ class DrawCollider:
     #描画ハンドル
     handle = None
     
-    @staticmethod
     #3Dビューに登録する描画関数
     def draw_collider():
         print("draw_collider呼ばれました")
 
-        #頂点データ
-        vertices = {"pos": [[0, 0, 0], [2, 2, 2]]}
-        
+        #頂点データ   
+        vertices = {"pos":[[0,0,0],[2,2,2]]}
         #インデックスデータ
         indices = [[0,1]]
-
-
+   
         # ビルトインのシェーダを取得
-        shader = gpu.shader.from_builtin('3D_UNIFORM_COLOR')
+        shader = gpu.shader.from_builtin("3D_UNIFORM_COLOR")
 
 
         # バッチを作成(引数: シェーダ,トポロジー, 頂点データ,インデックスデータ)
-        batch = gpu_extras.batch.batch_for_shader(shader, 'LINES', vertices, indices = indices)
+        batch = gpu_extras.batch.batch_for_shader(shader, "LINES", vertices, indices=indices)
 
 
         #シェーダのパラメータ設定
-        color = (0.5, 1.0, 1.0, 1.0)
+        color = [0.5, 1.0, 1.0, 1.0]
         shader.bind()
         shader.uniform_float("color", color)
         #描画
@@ -236,7 +234,8 @@ def register():
     #メニューに項目を追加 
     bpy.types.TOPBAR_MT_editor_menus.append(TOPBAR_MT_my_menu.submenu)
     # 3Dビューに描画関数を追加
-    DrawCollider.handle = bpy.types.SpaceView3D.draw_handler_add(DrawCollider.draw_collider, (), 'WINDOW', 'POST_VIEW')
+    DrawCollider.handle = bpy.types.SpaceView3D.draw_handler_add(
+    DrawCollider.draw_collider, (), "WINDOW", "POST_VIEW")
     print("レベルエディタが有効化されました")
 
 # Add-On無効化時コールバック
@@ -244,11 +243,11 @@ def unregister():
     #メニューから項目を削除
     bpy.types.TOPBAR_MT_editor_menus.remove(TOPBAR_MT_my_menu.submenu)
     #3Dビューから描画関数を削除
-    bpy.types.SpaceView3D.draw_handler_remove(DrawCollider.handle,'WINDOW')
-     # Blenderからクラスを削除
+    bpy.types.SpaceView3D.draw_handler_remove(DrawCollider.handle, "WINDOW")
+    # Blenderからクラスを削除
     for cls in reversed(classes):
         bpy.utils.unregister_class(cls)
     print("レベルエディタが無効化されました")
-
+    
 if __name__ == "__main__":
     register()
