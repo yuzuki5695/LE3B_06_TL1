@@ -20,14 +20,18 @@ bl_info = {
 
 #コライダー描画
 class DrawCollider:
+    
     #描画ハンドル
     handle = None
     
+    @staticmethod
     #3Dビューに登録する描画関数
     def draw_collider():
-        
+        print("draw_collider呼ばれました")
+
         #頂点データ
-        vertices = {"pos":[[0,0,0],[2,2,2]]}
+        vertices = {"pos": [[0, 0, 0], [2, 2, 2]]}
+        
         #インデックスデータ
         indices = [[0,1]]
 
@@ -232,7 +236,7 @@ def register():
     #メニューに項目を追加 
     bpy.types.TOPBAR_MT_editor_menus.append(TOPBAR_MT_my_menu.submenu)
     # 3Dビューに描画関数を追加
-    DrawCollider.handle = bpy.types.SpaceView3D.draw_handler_add(DrawCollider.draw_collider,(),'WINDOW', 'POST_VIEW')
+    DrawCollider.handle = bpy.types.SpaceView3D.draw_handler_add(DrawCollider.draw_collider, (), 'WINDOW', 'POST_VIEW')
     print("レベルエディタが有効化されました")
 
 # Add-On無効化時コールバック
