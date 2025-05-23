@@ -5,6 +5,7 @@ import gpu
 import gpu_extras.batch
 import copy
 import mathutils
+import json
 
 # ブレンダーに登録するアドオン情報
 bl_info = {
@@ -56,8 +57,8 @@ class MYADDON_OT_export_scene(bpy.types.Operator, bpy_extras.io_utils.ExportHelp
     bl_label = "シーン出力"
     bl_description = "シーン出力をExportします"
     #出力するファイルの拡張子
-    filename_ext = ".scene"
-    
+    filename_ext = ".json"
+
     def write_and_print(self,file,str):
         print(str)
 
@@ -123,11 +124,36 @@ class MYADDON_OT_export_scene(bpy.types.Operator, bpy_extras.io_utils.ExportHelp
                 #シーン直下のオブジェクトをルートノード(深さ0)とし、再起関数で走査
                 self.parse_scene_recursive(file,object,0)
 
+    def export_json(self):
+        """JSON形式でファイルに出力"""
+
+        #保存する情報をまとめるdict
+        ison_object_root = dict()
+
+        #ノード名
+        ison_object_root["name"] = "scene"
+        #オブジェクトリストを形成
+        ison_object_root["objects"] = list()
+        #Todo: シーン内の全オブジェクト走査してパック
+        #後でコードを書く
+
+        #オブジェクトをJSON文字列にエンコード
+        json_text = json_JSONEncoder().encode(ison_object_root)
+        #コンソールに表示してみる
+        print(json_text)
+
+        #ファイルをテキスト形式で書き出し用にオープン
+        #スコア要素を抜けると自動的にクローズされる
+        with open(self.filepath, "wt",encoding="utf-8") as file:
+
+            #ファイルに文字列を書き込む
+            file.write(json_text)
+
     def execute(self,context):
         print("シーン情報をExportします")
         
-        #ファイルに出力
-        self.export()
+         #ファイルに出力
+        self.export_json()
 
         self.report({'INFO'},"シーン情報をExportしました")
         print("シーン情報をExportしました")
