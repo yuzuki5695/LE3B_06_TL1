@@ -135,7 +135,13 @@ class MYADDON_OT_export_scene(bpy.types.Operator, bpy_extras.io_utils.ExportHelp
         #オブジェクトリストを形成
         json_object_root["objects"] = list()
         #Todo: シーン内の全オブジェクト走査してパック
-
+        #シーン内の全オブジェクトについて
+        for object in bpy.context.scene.objects:
+                #親オブジェクトがあるものはスキップ(代わりに親から呼び出すから)
+                if(object.parent):
+                    continue
+                #シーン直下のオブジェクトをルートノード(深さ0)とし、再起関数で走査
+                self.parse_scene_recursive_json(json_object_root["objects"],object, 0) 
 
         #オブジェクトをJSON文字列にエンコード (改行?・インデント付き)
         json_text =  json.dumps(json_object_root, ensure_ascii=False, cls=json.JSONEncoder, indent=4)
@@ -149,6 +155,21 @@ class MYADDON_OT_export_scene(bpy.types.Operator, bpy_extras.io_utils.ExportHelp
             #ファイルに文字列を書き込む
             file.write(json_text)
 
+    def parse_scene_recursive_json(self,data_parent,object,level):
+            #シーンのオブジェクト1個分のjsonオブジェクト生成
+            json_object = dict()
+            #オブジェクト種類
+            json_object["type"] = object.type   
+            #オブジェクト名
+            json_object["name"] = object.name  
+            
+            #Todo: その他情報をパック
+
+            #1個分のjsonオブジェクトを親オブジェクトに登録
+            data_parent.append(json_object)  
+                
+            #Todo: 直接の子供リストを走査
+            #後でコードを書く
 
     def execute(self,context):
         print("シーン情報をExportします")
