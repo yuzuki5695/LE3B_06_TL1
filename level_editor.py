@@ -128,17 +128,17 @@ class MYADDON_OT_export_scene(bpy.types.Operator, bpy_extras.io_utils.ExportHelp
         """JSON形式でファイルに出力"""
 
         #保存する情報をまとめるdict
-        ison_object_root = dict()
+        json_object_root = dict()
 
         #ノード名
-        ison_object_root["name"] = "scene"
+        json_object_root["name"] = "scene"
         #オブジェクトリストを形成
-        ison_object_root["objects"] = list()
+        json_object_root["objects"] = list()
         #Todo: シーン内の全オブジェクト走査してパック
-        #後でコードを書く
 
-        #オブジェクトをJSON文字列にエンコード
-        json_text = json.JSONEncoder().encode(ison_object_root)
+
+        #オブジェクトをJSON文字列にエンコード (改行?・インデント付き)
+        json_text =  json.dumps(json_object_root, ensure_ascii=False, cls=json.JSONEncoder, indent=4)
         #コンソールに表示してみる
         print(json_text)
 
@@ -148,6 +148,7 @@ class MYADDON_OT_export_scene(bpy.types.Operator, bpy_extras.io_utils.ExportHelp
 
             #ファイルに文字列を書き込む
             file.write(json_text)
+
 
     def execute(self,context):
         print("シーン情報をExportします")
