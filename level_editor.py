@@ -162,14 +162,48 @@ class MYADDON_OT_export_scene(bpy.types.Operator, bpy_extras.io_utils.ExportHelp
             json_object["type"] = object.type   
             #オブジェクト名
             json_object["name"] = object.name  
-            
+
             #Todo: その他情報をパック
 
-            #1個分のjsonオブジェクトを親オブジェクトに登録
-            data_parent.append(json_object)  
-                
+            #オブジェクトのローカルトランスフォームから
+            #平行移動、回転、スケールから抽出
+            trans, rot, scale = object.matrix_local.decompose()
+            #回転を Quternion から Euler (3軸での回転角) に変換
+            rot = rot.to_euler()
+            #ラジアンから度数法に変換
+            rot.x = math.degrees(rot.x)
+            rot.y = math.degrees(rot.y)
+            rot.z = math.degrees(rot.z)
+            #トランスフォーム情報をディクショナリに登録
+            transform = dict()
+            transform["translation"] = (trans.x,trans.y,trans.z)
+            transform["rotation"] = (rot.x,rot.y,rot.z)
+            transform["scaling"] = (scale.x,scale.y,scale.z)
+            #まとめて1個分のjsonオブジェクトに登録
+            json_object["transform"] = transform
+
+            #カスタムプロパティ'file_name'
+            if "file_name" in object:
+                json_object["file_name"] = object["file_name"]
+
+                #カスタムプロパティ'collider'
+                if "collider" in object:
+                    collider = dict()
+                    collider["type"] = object["collider"]
+                    collider["center"] = object["collider_center"].to_list()
+                    collider["size"] = object["collider_size"].to_list()
+                    json_object["collider"] = collider
+                    
             #Todo: 直接の子供リストを走査
-            #後でコードを書く
+            if len(object.children) > 0:
+                #子ノードリストを作成
+                json_object["children"] = list()
+
+                #子ノードへ進む(深さが1上がる)
+                for child in object.children:
+                    self.parse_scene_recursive_json(json_object["children"],child,level + 1)
+            # 親ノードのリストに自分を追加
+            data_parent.append(json_object)
 
     def execute(self,context):
         print("シーン情報をExportします")
