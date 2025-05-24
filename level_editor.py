@@ -138,7 +138,7 @@ class MYADDON_OT_export_scene(bpy.types.Operator, bpy_extras.io_utils.ExportHelp
         #後でコードを書く
 
         #オブジェクトをJSON文字列にエンコード
-        json_text = json_JSONEncoder().encode(ison_object_root)
+        json_text = json.JSONEncoder().encode(ison_object_root)
         #コンソールに表示してみる
         print(json_text)
 
