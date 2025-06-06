@@ -411,7 +411,6 @@ class DrawCollider:
         # バッチを作成(引数: シェーダ,トポロジー, 頂点データ,インデックスデータ)
         batch = gpu_extras.batch.batch_for_shader(shader, "LINES", vertices, indices=indices)
 
-
         #シェーダのパラメータ設定
         color = [0.5, 1.0, 1.0, 1.0]
         shader.bind()
