@@ -10,6 +10,8 @@ from .file_name import OBJECT_PT_file_name
 from .collider import OBJECT_PT_collider
 from .draw_collider import DrawCollider
 from .my_menu import TOPBAR_MT_my_menu
+from .add_disableoption import MYADDON_OT_add_disableoption
+from .disable_option import MYADDON_OT_disable_option
 
 # Blenderに登録するクラスリスト
 classes = (
@@ -21,6 +23,8 @@ classes = (
     OBJECT_PT_file_name,
     MYADDON_OT_add_collider,
     OBJECT_PT_collider,
+    MYADDON_OT_add_disableoption,
+    MYADDON_OT_disable_option,
     )
     
     
