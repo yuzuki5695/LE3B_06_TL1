@@ -137,7 +137,11 @@ class MYADDON_OT_export_scene(bpy.types.Operator, bpy_extras.io_utils.ExportHelp
             #カスタムプロパティ'file_name'
             if "file_name" in object:
                 json_object["file_name"] = object["file_name"]
-
+                
+            # カスタムプロパティ 'disabled'
+            if "disabled" in object:
+                json_object["disabled"] = bool(object["disabled"])  # ← True/Falseで出力
+           
                 #カスタムプロパティ'collider'
                 if "collider" in object:
                     collider = dict()

@@ -18,22 +18,14 @@ class MYADDON_OT_disable_option(bpy.types.Panel):
         if obj is None:
             layout.label(text="オブジェクトが選択されていません")
             return
-
-        #パネルに項目を追加
-        if "Disabled" in context.object:
-            #既にプロパティがあれば、プロパティを表示
+        
+        # 'disabled' プロパティがなければ、追加ボタンを表示
+        if "disabled" not in obj:
             layout.operator(MYADDON_OT_add_disableoption.bl_idname, text="Add Disabled")
         else:
-            #プロパティがなければ、プロパティ追加ボタンを表示
-            self.layout.operator(MYADDON_OT_add_disableoption.bl_idname)
-
-            # チェックボックスの表示
-            layout.prop(obj, '["disabled"]', text=self.bl_label)
-
-            # チェック状態に応じて表示状態を制御
-            if obj["disabled"]:
-                obj.hide_viewport = True
-                obj.hide_render = True
-            else:
-                obj.hide_viewport = False
-                obj.hide_render = False
+            # プロパティがあればチェックボックスを表示
+            layout.prop(obj, '["disabled"]', text="非表示にする")
+            # 表示/非表示を切り替え
+            is_disabled = obj["disabled"]
+            obj.hide_viewport = is_disabled
+            obj.hide_render = is_disabled
