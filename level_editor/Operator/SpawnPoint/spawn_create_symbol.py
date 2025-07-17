@@ -11,7 +11,7 @@ class MYADDON_OT_spawn_create_symbol(bpy.types.Operator):
     bl_options = {'REGISTER', 'UNDO'}
     
     # オブジェクト名
-    object_name = "Player"
+    object_name = "PlayerSpawn"
     
     def execute(self,context):
         #読み込み済みのコピー元オブジェクトを検索
