@@ -1,6 +1,7 @@
 import bpy
 
 from .add_disableoption import MYADDON_OT_add_disableoption
+from .toggle_disable import MYADDON_OT_toggle_visibility
 
 #パネル 無効オプション
 class MYADDON_OT_disable_option(bpy.types.Panel):
@@ -24,8 +25,6 @@ class MYADDON_OT_disable_option(bpy.types.Panel):
             layout.operator(MYADDON_OT_add_disableoption.bl_idname, text="Add Disabled")
         else:
             # プロパティがあればチェックボックスを表示
-            layout.prop(obj, '["disabled"]', text="非表示にする")
             # 表示/非表示を切り替え
-            is_disabled = obj["disabled"]
-            obj.hide_viewport = is_disabled
-            obj.hide_render = is_disabled
+            layout.prop(obj, '["disabled"]', text="無効化")
+            layout.operator("myaddon.toggle_visibility", text="レイアウトに反映")

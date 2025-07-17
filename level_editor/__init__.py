@@ -10,8 +10,12 @@ from .file_name import OBJECT_PT_file_name
 from .collider import OBJECT_PT_collider
 from .draw_collider import DrawCollider
 from .my_menu import TOPBAR_MT_my_menu
-from .add_disableoption import MYADDON_OT_add_disableoption
-from .disable_option import MYADDON_OT_disable_option
+# 無効オプション関連
+from .Disable.add_disableoption import MYADDON_OT_add_disableoption
+from .Disable.toggle_disable import MYADDON_OT_toggle_visibility
+from .Disable.disable_option import MYADDON_OT_disable_option
+#スポーン関連
+from .SpawnPoint.spawn import MYADDON_OT_spawn_import_symbol
 
 # Blenderに登録するクラスリスト
 classes = (
@@ -24,7 +28,9 @@ classes = (
     MYADDON_OT_add_collider,
     OBJECT_PT_collider,
     MYADDON_OT_add_disableoption,
+    MYADDON_OT_toggle_visibility,
     MYADDON_OT_disable_option,
+    MYADDON_OT_spawn_import_symbol,
     )
     
     
