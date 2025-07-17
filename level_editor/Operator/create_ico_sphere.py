@@ -1,6 +1,6 @@
 import bpy
 
-#オペレータ ICO球生成
+# オペレータ ICO球生成
 class MYADDON_OT_create_ico_sphere(bpy.types.Operator):
     bl_idname ="myaddon.myaddon_ot_create_object"
     bl_label = "ICO球生成"

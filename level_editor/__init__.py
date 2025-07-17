@@ -1,21 +1,25 @@
 import bpy
 
 # モジュールのインポート
-from .stretch_vertex import MYADDON_OT_stretch_vertex
-from .create_ico_sphere import MYADDON_OT_create_ico_sphere
-from .export_scene import MYADDON_OT_export_scene
-from .add_filename import MYADDON_OT_add_filename
-from .add_collider import MYADDON_OT_add_collider
-from .file_name import OBJECT_PT_file_name
-from .collider import OBJECT_PT_collider
-from .draw_collider import DrawCollider
+###-----------------オペレータ関連-----------------###
+from .Operator.stretch_vertex import MYADDON_OT_stretch_vertex
+from .Operator.create_ico_sphere import MYADDON_OT_create_ico_sphere
+from .Operator.export_scene import MYADDON_OT_export_scene
+#スポーン関連
+from .Operator.SpawnPoint.spawn import MYADDON_OT_spawn_import_symbol
+###-----------------カスタムプロパティ関連-----------------###
+# ファイル名関連
+from .FileName.add_filename import MYADDON_OT_add_filename
+from .FileName.file_name import OBJECT_PT_file_name
+# コライダー関連
+from .Collider.add_collider import MYADDON_OT_add_collider
+from .Collider.collider import OBJECT_PT_collider
+from .Collider.draw_collider import DrawCollider
 from .my_menu import TOPBAR_MT_my_menu
 # 無効オプション関連
 from .Disable.add_disableoption import MYADDON_OT_add_disableoption
 from .Disable.toggle_disable import MYADDON_OT_toggle_visibility
 from .Disable.disable_option import MYADDON_OT_disable_option
-#スポーン関連
-from .SpawnPoint.spawn import MYADDON_OT_spawn_import_symbol
 
 # Blenderに登録するクラスリスト
 classes = (
