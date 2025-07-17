@@ -1,7 +1,7 @@
 import bpy
 import os
 
-#オペレータ 出現ポイントのシンボルを読み込む
+# オペレータ 出現ポイントのシンボルを読み込む
 class MYADDON_OT_spawn_import_symbol(bpy.types.Operator):
     bl_idname ="myaddon.myaddon_ot_spawn_import_symbol"
     bl_label = "出現ポイントシンボルImport"
@@ -11,6 +11,11 @@ class MYADDON_OT_spawn_import_symbol(bpy.types.Operator):
     
     def execute(self,context):
         print("出現ポイントのシンボルをImportします")
+        # 重複ロード防止
+        spawn_object = bpy.data.objects.get(MYADDON_OT_spawn_import_symbol.prototype_object_name)
+        if spawn_object is not None:
+            return {'CANCELLED'}
+        
         # スクリプトが配置されているディレクトリの名前を取得する
         addon_directory = os.path.dirname(__file__)
         # ディレクトリからのモデルファイルの相対パスを記述
@@ -31,8 +36,11 @@ class MYADDON_OT_spawn_import_symbol(bpy.types.Operator):
         # アクティブなオブジェクトを取得
         object= bpy.context.active_object
         # オブジェクト名を変更
-        object.name = "PlayerSpawn"
+        object.name =  MYADDON_OT_spawn_import_symbol.prototype_object_name
         # オブジェクトの種類を設定
         object["type"] = MYADDON_OT_spawn_import_symbol.prototype_object_name
+      
+        # メモリ上においておくがシーンから外す
+        bpy.context.collection.objects.unlink(object)
 
         return{'FINISHED'}
