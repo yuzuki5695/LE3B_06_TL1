@@ -73,8 +73,6 @@ class MYADDON_OT_spawn_create_symbol(bpy.types.Operator):
 
     #プロパティ(引数として渡せる)
     type: bpy.props.StringProperty(name = "Type", default = "Player")
-    
-
 
     def execute(self,context):
         # 読み込み済みのコピー元オブジェクトを検索
@@ -88,3 +86,41 @@ class MYADDON_OT_spawn_create_symbol(bpy.types.Operator):
             spawn_object = bpy.data.objects.get(SpawnNames.names[self.type][SpawnNames.PROTOTYPE])
         
         print("出現ポイントのシンボルを作成します")
+      
+         # Blenderでの選択をする
+        bpy.ops.object.select_all(action='DESELECT')
+        
+        # 複製元の非表示オブジェクトを複製する
+        object = spawn_object.copy()
+
+        # 複製したオブジェクトを現在のシーンにリンク (出現させる)
+        bpy.context.collection.objects.link(object)
+        
+        # オブジェクト名を変更
+        object.name = SpawnNames.names[self.type][SpawnNames.INSTANCE]
+
+        return {'FINISHED'}
+
+# オペレータ 自キャラ専用出現ポイントシンボル作成
+class MYADDON_OT_spawn_create_player_symbol(bpy.types.Operator):
+    bl_idname ="myaddon.myaddon_ot_spawn_create_player_symbol"
+    bl_label = "プレイヤー出現ポイントシンボルの作成"
+    bl_description = "プレイヤー出現ポイントのシンボルを作成します"
+
+    def execute(self, context):
+        # 出現ポイントのシンボルを作成するオペレータを呼び出す
+        bpy.ops.myaddon.myaddon_ot_spawn_create_symbol('EXEC_DEFAULT', type="Player")
+        
+        return {'FINISHED'}
+
+# オペレータ 敵専用出現ポイントシンボル作成
+class MYADDON_OT_spawn_create_enemy_symbol(bpy.types.Operator):
+    bl_idname ="myaddon.myaddon_ot_spawn_create_enemy_symbol"
+    bl_label = "敵出現ポイントシンボルの作成"
+    bl_description = "敵出現ポイントのシンボルを作成します"
+
+    def execute(self, context):
+        # 出現ポイントのシンボルを作成するオペレータを呼び出す
+        bpy.ops.myaddon.myaddon_ot_spawn_create_symbol('EXEC_DEFAULT', type="Enemy")
+        
+        return {'FINISHED'}
