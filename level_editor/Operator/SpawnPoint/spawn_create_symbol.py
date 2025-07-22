@@ -1,7 +1,7 @@
 import bpy
 
 
-from .spawn import SpawnNames
+from .spawnNames import SpawnNames
 
 # オペレータ 出現ポイントのシンボルを作成・配置する
 class MYADDON_OT_spawn_create_symbol(bpy.types.Operator):
@@ -37,5 +37,5 @@ class MYADDON_OT_spawn_create_symbol(bpy.types.Operator):
         
         # オブジェクト名を変更
         object.name = SpawnNames.names[self.type][SpawnNames.INSTANCE]
-
+        
         return {'FINISHED'}

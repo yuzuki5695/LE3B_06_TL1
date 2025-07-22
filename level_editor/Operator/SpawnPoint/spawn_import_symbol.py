@@ -1,7 +1,7 @@
 import bpy
 import os
 
-from .spawn import SpawnNames
+from .spawnNames import SpawnNames
 
 # オペレータ 出現ポイントのシンボルを読み込む
 class MYADDON_OT_spawn_import_symbol(bpy.types.Operator):
@@ -37,7 +37,7 @@ class MYADDON_OT_spawn_import_symbol(bpy.types.Operator):
         # オブジェクト名を変更
         object.name =  SpawnNames.names[type][SpawnNames.PROTOTYPE]
         # オブジェクトの種類を設定
-        object["type"] =  SpawnNames.names[type][SpawnNames.PROTOTYPE]
+        object["type"] =  SpawnNames.names[type][SpawnNames.INSTANCE]
       
         # メモリ上においておくがシーンから外す
         bpy.context.collection.objects.unlink(object)
