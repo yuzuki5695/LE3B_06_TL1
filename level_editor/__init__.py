@@ -5,11 +5,11 @@ import bpy
 from .Operator.stretch_vertex import MYADDON_OT_stretch_vertex
 from .Operator.create_ico_sphere import MYADDON_OT_create_ico_sphere
 from .Operator.export_scene import MYADDON_OT_export_scene
-#スポーン関連
-from .Operator.SpawnPoint.spawn import MYADDON_OT_spawn_import_symbol
-from .Operator.SpawnPoint.spawn import MYADDON_OT_spawn_create_symbol
-from .Operator.SpawnPoint.spawn import MYADDON_OT_spawn_create_player_symbol
-from .Operator.SpawnPoint.spawn import MYADDON_OT_spawn_create_enemy_symbol
+# スポーン関連
+from .Operator.SpawnPoint.spawn_import_symbol import MYADDON_OT_spawn_import_symbol
+from .Operator.SpawnPoint.spawn_create_symbol import MYADDON_OT_spawn_create_symbol
+from .Operator.SpawnPoint.spawn_create_player_symbol import MYADDON_OT_spawn_create_player_symbol
+from .Operator.SpawnPoint.spawn_create_enemy_symbol import MYADDON_OT_spawn_create_enemy_symbol
 ###-----------------カスタムプロパティ関連-----------------###
 # ファイル名関連
 from .FileName.add_filename import MYADDON_OT_add_filename
