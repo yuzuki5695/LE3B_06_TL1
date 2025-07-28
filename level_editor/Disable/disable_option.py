@@ -1,12 +1,11 @@
 import bpy
 
 from .add_disableoption import MYADDON_OT_add_disableoption
-from .toggle_disable import MYADDON_OT_toggle_visibility
 
 #パネル 無効オプション
-class MYADDON_OT_disable_option(bpy.types.Panel):
+class MYADDON_PT_disable_option(bpy.types.Panel):
     """オブジェクトの無効オプションパネル"""
-    bl_idname = "MYADDON_OT_disable_option"
+    bl_idname = "MYADDON_PT_disable_option"
     bl_label = "Disabled"
     bl_space_type = "PROPERTIES"
     bl_region_type = "WINDOW"

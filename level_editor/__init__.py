@@ -22,7 +22,7 @@ from .my_menu import TOPBAR_MT_my_menu
 # 無効オプション関連
 from .Disable.add_disableoption import MYADDON_OT_add_disableoption
 from .Disable.toggle_disable import MYADDON_OT_toggle_visibility
-from .Disable.disable_option import MYADDON_OT_disable_option
+from .Disable.disable_option import MYADDON_PT_disable_option
 
 # Blenderに登録するクラスリスト
 classes = (
@@ -36,7 +36,7 @@ classes = (
     OBJECT_PT_collider,
     MYADDON_OT_add_disableoption,
     MYADDON_OT_toggle_visibility,
-    MYADDON_OT_disable_option,
+    MYADDON_PT_disable_option,
     MYADDON_OT_spawn_import_symbol,
     MYADDON_OT_spawn_create_symbol,
     MYADDON_OT_spawn_create_player_symbol,
