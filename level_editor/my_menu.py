@@ -6,7 +6,6 @@ from .Operator.export_scene import MYADDON_OT_export_scene
 from .Operator.SpawnPoint.spawn_create_player_symbol import MYADDON_OT_spawn_create_player_symbol
 from .Operator.SpawnPoint.spawn_create_enemy_symbol import MYADDON_OT_spawn_create_enemy_symbol
 from .info import bl_info
-
  # メニュー項目描画
 def draw_menu_manual(self,context):
     self.layout.operator("wm.url_open_preset", text="Manual", icon='HELP')
