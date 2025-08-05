@@ -95,4 +95,3 @@ class DrawCollider:
         shader.uniform_float("color", color)
         #描画
         batch.draw(shader)
-     
