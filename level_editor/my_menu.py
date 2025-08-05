@@ -5,20 +5,7 @@ from .Operator.create_ico_sphere import MYADDON_OT_create_ico_sphere
 from .Operator.export_scene import MYADDON_OT_export_scene
 from .Operator.SpawnPoint.spawn_create_player_symbol import MYADDON_OT_spawn_create_player_symbol
 from .Operator.SpawnPoint.spawn_create_enemy_symbol import MYADDON_OT_spawn_create_enemy_symbol
-
- # ブレンダーに登録するアドオン情報
-bl_info = {
-    "name": "レベルエディタ",
-    "author": "Taro kamata",
-    "version": (1, 0),
-    "blender": (3, 3, 1),
-    "location": "",
-    "description": "レベルエディタ",
-    "warning": "",
-    "wiki_url": "",      
-    "tracker_url": "",
-    "category": "Object"
-}
+from .info import bl_info
 
  # メニュー項目描画
 def draw_menu_manual(self,context):
